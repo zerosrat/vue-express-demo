@@ -11,13 +11,22 @@ cd server
 npm i
 ```
 
-## run at localhost
+## run mongodb
 ``` bash
-cd client
-npm run dev
+# win
+C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe
+
+# mac
+mongod
 ```
 
+## run at localhost
 ``` bash
+# run client
+cd client
+npm run dev
+
+# run server
 cd server
 npm run start
 ```
