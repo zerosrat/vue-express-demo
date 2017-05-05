@@ -1,18 +1,26 @@
 <template>
   <div>
-    <h2>Welcome back!</h2>
-    <button type="button" @click="handleSignout">Logout</button>
-    <router-link :to="{name: 'login'}" tag="button">Login</router-link>
-    <router-link :to="{name: 'register'}" tag="button">Register</router-link>
+    <h2 v-if="!userInfo.id">Please sign in or sign up</h2>
+    <h2 v-else>Welcome back, {{userInfo.name}}!</h2>
+    <button v-if="userInfo.id" type="button" @click="handleSignOut">Sign out</button>
+    <router-link v-if="!userInfo.id" :to="{name: 'signin'}" tag="button">Sign in</router-link>
+    <router-link v-if="!userInfo.id" :to="{name: 'signup'}" tag="button">Sign up</router-link>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   methods: {
-    handleSignout () {
-      this.$router.push({ name: 'login' })
+    handleSignOut () {
+      this.$store.dispatch('signOut')
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   }
 }
 </script>

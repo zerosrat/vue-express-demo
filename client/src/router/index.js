@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '@/views/Home'
-import Login from '@/views/Login'
-import Register from '@/views/Register'
+import Signin from '@/views/Signin'
+import Signup from '@/views/Signup'
 
 const routes = [
   {
@@ -12,14 +12,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: '/signin',
+    name: 'signin',
+    component: Signin
   },
   {
-    path: '/register',
-    name: 'register',
-    component: Register
+    path: '/signup',
+    name: 'signup',
+    component: Signup
   }
 ]
 

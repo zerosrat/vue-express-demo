@@ -3,7 +3,7 @@
     <form>
       <input v-model="username" type="text" placeholder="username">
       <input v-model="password" type="password" placeholder="password">
-      <button type="submit" @click.prevent="handleSignin">Login</button>
+      <button type="submit" @click.prevent="handleRegister">Sign up</button>
     </form>
   </div>
 </template>
@@ -17,8 +17,8 @@ export default {
     }
   },
   methods: {
-    handleSignin () {
-      this.$router.push({ name: 'home' })
+    handleRegister () {
+      this.$router.push({ name: 'signup' })
     }
   }
 }

@@ -20,13 +20,15 @@ C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe
 mongod
 ```
 
-## run at localhost
+## development
 ``` bash
-# run client
+# serve at localhost:1024
 cd client
 npm run dev
+```
 
-# run server
+``` bash
+# serve at localhost:2048
 cd server
 npm run start
 ```

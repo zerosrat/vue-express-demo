@@ -1,18 +1,13 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img class="logo" src="./assets/logo.png" @click="$router.push('/')">
     <router-view />
   </div>
 </template>
 
 <script>
-import Login from './views/Login'
-
 export default {
-  name: 'app',
-  components: {
-    Login
-  }
+  name: 'app'
 }
 </script>
 
@@ -24,5 +19,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.logo {
+  cursor: pointer;
 }
 </style>
