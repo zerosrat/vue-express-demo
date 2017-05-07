@@ -3,7 +3,7 @@ const User = mongoose.model('User')
 
 module.exports = {
   create (req, res, next) {
-    if (!req.body.name && !req.body.password) {
+    if (!req.body.name || !req.body.password) {
       let err = new Error('Incorrect params');
       err.status = 400;
       next(err);
@@ -13,7 +13,7 @@ module.exports = {
           next(err);
         } else {
           if (user) {
-            let err = new Error('Already exist');
+            let err = new Error('User already exist');
             err.status = 409;
             next(err);
           } else {
