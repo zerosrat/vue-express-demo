@@ -24,4 +24,12 @@ export default {
 .logo {
   cursor: pointer;
 }
+
+.button {
+  padding: 5px 10px;
+  border: 1px solid #4fc08d;
+  border-radius: 1em;
+  background-color: #fff;
+  color: #42b983;
+}
 </style>

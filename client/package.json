@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "todomvc-app-css": "^2.1.0",
     "vue": "^2.2.6",
     "vue-router": "^2.5.2",
     "vuex": "^2.3.1"

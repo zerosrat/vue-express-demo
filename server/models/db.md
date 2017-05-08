@@ -1,6 +1,9 @@
 # db design
 
 ## user
-- id
 - name
 - password
+
+## todo
+- text
+- done
