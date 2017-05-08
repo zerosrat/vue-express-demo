@@ -1,16 +1,14 @@
-import router from '@/router'
-
-const _userInfo = {
-  id: 'z001',
-  name: 'zero'
-}
+import axios from 'axios'
 
 export default {
-  signIn (req, cb) {
-    setTimeout(() => {
-      router.push({ name: 'home' })
-      cb(Object.assign({}, _userInfo, req))
-    }, 100)
+  signIn (req, cb, errorCb) {
+    axios.post(`${window.config.API_ORIGIN}/api/session`, req)
+      .then(res => {
+        cb(res)
+      })
+      .catch(err => {
+        errorCb(err)
+      })
   },
   signOut (cb) {
     setTimeout(() => {

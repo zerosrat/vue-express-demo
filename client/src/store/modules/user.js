@@ -2,39 +2,39 @@ import * as types from '../mutations'
 import session from '../../api/session'
 
 const state = {
-  userInfo: JSON.parse(window.sessionStorage.getItem('user')) || {}
+  userInfo: JSON.parse(window.sessionStorage.getItem('userInfo')) || {},
+  token: window.sessionStorage.getItem('userToken') || ''
 }
 
 const getters = {
-  userInfo: state => state.userInfo
+  userInfo: state => state.userInfo,
+  userToken: state => state.token
 }
 
 const actions = {
-  signIn ({ commit }, req) {
-    session.signIn(
-      req,
-      (userInfo) => {
-        commit(types.SIGN_IN, { userInfo })
-        window.sessionStorage.setItem('user', JSON.stringify(userInfo))
-      }
-    )
+  signIn ({ commit }, data) {
+    commit(types.SIGN_IN, data)
+    window.sessionStorage.setItem('userInfo', JSON.stringify(data.user))
+    window.sessionStorage.setItem('token', data.token)
   },
 
   signOut ({ commit }) {
     session.signOut(() => {
       commit(types.SIGN_OUT)
-      window.sessionStorage.setItem('user', null)
+      window.sessionStorage.setItem('userInfo', null)
     })
   }
 }
 
 const mutations = {
-  [types.SIGN_IN] (state, { userInfo }) {
-    state.userInfo = userInfo
+  [types.SIGN_IN] (state, { user, token }) {
+    state.userInfo = user
+    state.token = token
   },
 
   [types.SIGN_OUT] () {
     state.userInfo = {}
+    state.token = ''
   }
 }
 

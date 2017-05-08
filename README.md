@@ -1,4 +1,4 @@
-# Vue-express-demo
+# vue-express-demo
 
 ## install dependencies
 ``` bash

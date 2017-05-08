@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import sessionAPI from '@/api/session'
+
 export default {
   data () {
     return {
@@ -18,10 +20,21 @@ export default {
   },
   methods: {
     handleSignin () {
-      this.$store.dispatch('signIn', {
-        name: this.name,
-        password: this.password
-      })
+      sessionAPI.signIn(
+        {
+          name: this.name,
+          password: this.password
+        },
+        ({ data }) => {
+          this.$store.dispatch('signIn', data.data)
+          this.$router.push({ name: 'home' })
+        },
+        err => {
+          if (err.response.data) {
+            alert(err.response.data.message)
+          }
+        }
+      )
     }
   }
 }

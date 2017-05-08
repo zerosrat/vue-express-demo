@@ -25,7 +25,7 @@ export default {
           name: this.name,
           password: this.password
         },
-        ({status, data}) => {
+        ({status}) => {
           if (status === 201) {
             alert('Sign up successfully')
           }

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2 v-if="!userInfo.id">Please sign in or sign up</h2>
+    <h2 v-if="!userToken">Please sign in or sign up</h2>
     <h2 v-else>Welcome back, {{userInfo.name}}!</h2>
-    <button v-if="userInfo.id" type="button" @click="handleSignOut">Sign out</button>
-    <router-link v-if="!userInfo.id" :to="{name: 'signin'}" tag="button">Sign in</router-link>
-    <router-link v-if="!userInfo.id" :to="{name: 'signup'}" tag="button">Sign up</router-link>
+    <button v-if="userToken" type="button" @click="handleSignOut">Sign out</button>
+    <router-link v-if="!userToken" :to="{name: 'signin'}" tag="button">Sign in</router-link>
+    <router-link v-if="!userToken" :to="{name: 'signup'}" tag="button">Sign up</router-link>
   </div>
 </template>
 
@@ -19,7 +19,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'userInfo'
+      'userInfo',
+      'userToken'
     ])
   }
 }

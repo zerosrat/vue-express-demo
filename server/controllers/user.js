@@ -22,7 +22,7 @@ module.exports = {
               if (err) {
                 next(err);
               } else {
-                res.status(201).json(nuser);
+                res.status(201).json({ data: nuser });
               }
             })
           }
@@ -36,7 +36,7 @@ module.exports = {
       if (err) {
         next(err);
       } else {
-        res.json(users);
+        res.json({ data: users });
       }
     })
   },
@@ -47,7 +47,7 @@ module.exports = {
         next(err);
       } else {
         if (user) {
-          res.json(user);
+          res.json({ data: user });
         } else {
           let err = new Error('User not found');
           err.status = 404;

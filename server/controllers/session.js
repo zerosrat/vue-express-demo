@@ -22,7 +22,10 @@ module.exports = {
             let token = jwt.sign(user, config.secret);
             res.status(201).json({
               message: 'Sign in successfully',
-              token: token
+              data: {
+                token,
+                user
+              }
             });
           }
         }
