@@ -8,6 +8,7 @@ router.route('/todos')
   .get(Auth.verify, Todo.list);
 
 router.route('/todos/:_id')
+  .get(Auth.verify, Todo.getById)
   .patch(Auth.verify, Todo.updateById)
   .delete(Auth.verify, Todo.delete);
 

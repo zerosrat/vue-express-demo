@@ -3,7 +3,11 @@ const Todo = mongoose.model('Todo');
 
 module.exports = {
   create (req, res, next) {
-    if (!(req.body.text && typeof req.body.done === "boolean")) {
+    const { text, done } = req.body;
+    const { userid } = req.query;
+    const { _id } = req.params;
+
+    if (!(text && typeof done === "boolean" && userid)) {
       let err = new Error('Incorrect params');
       err.status = 400;
       next(err);
@@ -20,43 +24,96 @@ module.exports = {
   },
 
   list (req, res, next) {
-    Todo.find((err, todos) => {
-      if (err) {
-        next(err);
-      } else {
-        res.json({ data: todos });
-      }
-    })
+    const { userid } = req.query;
+    
+    if (!userid) {
+      let err = new Error('User id required');
+      err.status = 403;
+      next(err);
+    } else {
+      Todo.find({ userid }, (err, todos) => {
+        if (err) {
+          next(err);
+        } else {
+          res.json({ data: todos });
+        }
+      })
+    }
+  },
+
+  getById (req, res, next) {
+    const { userid } = req.query;
+    const { _id } = req.params;
+
+    if (!userid) {
+      let err = new Error('User id required');
+      err.status = 403;
+      next(err);
+    } else {
+      Todo.findOne({ _id, userid }, (err, todo) => {
+          if (err) {
+            next(err);
+          } else {
+            if (!todo) {
+              let err = new Error('Todo not found');
+              err.status = 404;
+              next(err);
+            } else {
+              res.json({ data: todo });
+            }
+          }
+        }
+      );
+    }
   },
 
   updateById (req, res, next) {
-    if (!(req.body.text || typeof req.body.done === "boolean")) {
+    const { text, done } = req.body;
+    const { userid } = req.query;
+    const { _id } = req.params;
+
+    if (!userid) {
+      let err = new Error('User id required');
+      err.status = 403;
+      next(err);
+    } else if (!(text || typeof done === "boolean")) {
       let err = new Error('Incorrect params');
       err.status = 400;
       next(err);
     } else {
-      // Todo.findOneAndUpdate({ _id: req.params._id }, (err, todo) => {
-      //   if (err) {
-      //     next(err);
-      //   } else {
-      //     if (todo) {
-      //       todo.text = req.body.text;
-      //       todo.done = req.body.done;
-      //       todo.save((err, td)=> {
-      //         if (err) {
-      //           next(err);
-      //         } else {
-      //           res.json({ message: 'Update successfully' });
-      //         }
-      //       })
-      //     } else {
-      //       let err = new Error('Todo not found');
-      //       err.status = 404;
-      //       next(err);
-      //     }
-      //   }
-      // });
-      Todo.findByIdAndUpdate(req.params._id, req.body, (err, todo) => {
+      Todo.findOneAndUpdate(
+        {
+          _id,
+          userid
+        },
+        req.body,
+        (err, todo) => {
+          if (err) {
+            next(err);
+          } else {
+            if (!todo) {
+              let err = new Error('Todo not found');
+              err.status = 404;
+              next(err);
+            } else {
+              res.json({ message: 'Update successfully' });
+            }
+          }
+        }
+      );
+    }
+  },
+
+  delete (req, res, next) {
+    const { userid } = req.query;
+    const { _id } = req.params;
+
+    if (!userid) {
+      let err = new Error('User id required');
+      err.status = 403;
+      next(err);
+    } else {
+      Todo.findOneAndRemove({ _id, userid }, (err, todo) => {
         if (err) {
           next(err);
         } else {
@@ -65,26 +122,10 @@ module.exports = {
             err.status = 404;
             next(err);
           } else {
-            res.json({ message: 'Update successfully' });
+            res.json({ message: 'Delete successfully' });
           }
         }
       })
     }
-  },
-
-  delete (req, res, next) {
-    Todo.findByIdAndRemove(req.params._id, (err, todo) => {
-      if (err) {
-        next(err);
-      } else {
-        if (!todo) {
-          let err = new Error('Todo not found');
-          err.status = 404;
-          next(err);
-        } else {
-          res.json({ message: 'Delete successfully' });
-        }
-      }
-    })
   }
 }
