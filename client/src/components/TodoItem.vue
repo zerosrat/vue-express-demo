@@ -4,9 +4,9 @@
       <input class="toggle"
         type="checkbox"
         :checked="todo.done"
-        @change="toggleTodo({ todo: todo })">
+        @change="updateTodo({done: $event.target.checked})">
       <label v-text="todo.text" @dblclick="editing = true"></label>
-      <button class="destroy" @click="deleteTodo({ todo: todo })"></button>
+      <button class="destroy" @click="deleteTodo"></button>
     </div>
     <input class="edit"
       v-show="editing"
@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-
 export default {
   name: 'Todo',
   props: ['todo'],
@@ -39,29 +37,28 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'editTodo',
-      'toggleTodo',
-      'deleteTodo'
-    ]),
     doneEdit (e) {
-      const value = e.target.value.trim()
-      const { todo } = this
-      if (!value) {
-        this.deleteTodo({
-          todo
-        })
+      const text = e.target.value.trim()
+      if (!text) {
+        this.deleteTodo()
       } else if (this.editing) {
-        this.editTodo({
-          todo,
-          value
-        })
+        this.updateTodo({ text })
         this.editing = false
       }
     },
     cancelEdit (e) {
       e.target.value = this.todo.text
       this.editing = false
+    },
+    updateTodo (prop) {
+      const newTodo = Object.assign({}, this.todo, prop)
+      this.$store.dispatch('updateTodo', {
+        newTodo,
+        todo: this.todo
+      })
+    },
+    deleteTodo () {
+      this.$store.dispatch('deleteTodo', this.todo)
     }
   }
 }

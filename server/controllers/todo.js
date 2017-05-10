@@ -3,8 +3,7 @@ const Todo = mongoose.model('Todo');
 
 module.exports = {
   create (req, res, next) {
-    const { text, done } = req.body;
-    const { userid } = req.query;
+    const { text, done, userid } = req.body;
     const { _id } = req.params;
 
     if (!(text && typeof done === "boolean" && userid)) {
@@ -25,7 +24,7 @@ module.exports = {
 
   list (req, res, next) {
     const { userid } = req.query;
-    
+
     if (!userid) {
       let err = new Error('User id required');
       err.status = 403;

@@ -18,10 +18,10 @@
     </header>
     <!-- main section -->
     <section class="main" v-show="todos.length">
-      <input class="toggle-all"
+      <!-- <input class="toggle-all"
         type="checkbox"
         :checked="allChecked"
-        @change="toggleAll({ done: !allChecked })">
+        @change="toggleAll({ done: !allChecked })"> -->
       <ul class="todo-list">
         <todo v-for="(todo, index) in filteredTodos" :key="index" :todo="todo"></todo>
       </ul>
@@ -39,17 +39,17 @@
             @click="visibility = key">{{ key | capitalize }}</a>
         </li>
       </ul>
-      <button class="clear-completed"
+      <!-- <button class="clear-completed"
         v-show="todos.length > remaining"
         @click="clearCompleted">
         Clear completed
-      </button>
+      </button> -->
     </footer>
   </section>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 import Todo from '@/components/TodoItem'
 
 const filters = {
@@ -67,9 +67,6 @@ export default {
     }
   },
   computed: {
-    todos () {
-      return this.$store.state.todo.todos
-    },
     allChecked () {
       return this.todos.every(todo => todo.done)
     },
@@ -78,24 +75,31 @@ export default {
     },
     remaining () {
       return this.todos.filter(todo => !todo.done).length
-    }
+    },
+    ...mapGetters([
+      'userInfo',
+      'todos'
+    ])
   },
   methods: {
     addTodo (e) {
-      var text = e.target.value
+      const text = e.target.value
       if (text.trim()) {
-        this.$store.commit('addTodo', { text })
+        this.$store.dispatch('addTodo', {
+          text,
+          done: false,
+          userid: this.userInfo._id
+        })
       }
       e.target.value = ''
-    },
-    ...mapMutations([
-      'toggleAll',
-      'clearCompleted'
-    ])
+    }
   },
   filters: {
     pluralize: (n, w) => n === 1 ? w : (w + 's'),
     capitalize: s => s.charAt(0).toUpperCase() + s.slice(1)
+  },
+  created () {
+    this.$store.dispatch('getAllTodos')
   }
 }
 </script>
