@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import axios from 'axios'
+
+Vue.axios = axios
 
 if (process.env.NODE_ENV !== 'production') {
   require('./config/dev.config.js')

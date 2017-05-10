@@ -1,11 +1,9 @@
-import axios from 'axios'
+import Vue from 'vue'
 import store from '@/store'
 
 export default {
   getList (cb, errorCb) {
-    axios.get(`${window.config.API_ORIGIN}/api/todos?userid=${store.getters.userInfo._id}`, {
-      headers: { 'x-access-token': store.getters.userToken }
-    })
+    Vue.axios.get(`${window.config.API_ORIGIN}/api/todos?userid=${store.getters.userInfo._id}`)
       .then(res => {
         cb(res)
       })
@@ -15,9 +13,7 @@ export default {
   },
 
   addTodo (req, cb, errorCb) {
-    axios.post(`${window.config.API_ORIGIN}/api/todos`, req, {
-      headers: { 'x-access-token': store.getters.userToken }
-    })
+    Vue.axios.post(`${window.config.API_ORIGIN}/api/todos`, req)
       .then(res => {
         cb(res)
       })
@@ -27,9 +23,7 @@ export default {
   },
 
   updateTodo (req, cb, errorCb) {
-    axios.patch(`${window.config.API_ORIGIN}/api/todos/${req._id}?userid=${req.userid}`, req, {
-      headers: { 'x-access-token': store.getters.userToken }
-    })
+    Vue.axios.patch(`${window.config.API_ORIGIN}/api/todos/${req._id}?userid=${req.userid}`, req)
       .then(res => {
         cb(res)
       })
@@ -39,9 +33,7 @@ export default {
   },
 
   deleteTodo (req, cb, errorCb) {
-    axios.delete(`${window.config.API_ORIGIN}/api/todos/${req._id}?userid=${req.userid}`, {
-      headers: { 'x-access-token': store.getters.userToken }
-    })
+    Vue.axios.delete(`${window.config.API_ORIGIN}/api/todos/${req._id}?userid=${req.userid}`)
       .then(res => {
         cb(res)
       })

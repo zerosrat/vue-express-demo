@@ -25,7 +25,16 @@ const routes = [
   {
     path: '/todo',
     name: 'todo',
-    component: Todo
+    component: Todo,
+    beforeEnter: (to, from, next) => {
+      const token = sessionStorage.getItem('token')
+      if (token) {
+        Vue.axios.defaults.headers.common['x-access-token'] = token
+        next()
+      } else {
+        next('/')
+      }
+    }
   }
 ]
 
@@ -33,7 +42,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'hash',
-  routes // （缩写）相当于 routes: routes
+  routes
 })
 
 export default router

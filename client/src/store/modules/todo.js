@@ -90,7 +90,7 @@ const mutations = {
 
   [types.DELETE_TODOS] (state, todo) {
     state.todos.splice(state.todos.indexOf(todo), 1)
-  },
+  }
 
   // toggleTodo (state, { todo }) {
   //   todo.done = !todo.done
