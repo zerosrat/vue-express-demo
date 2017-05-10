@@ -3,7 +3,7 @@ import session from '../../api/session'
 
 const state = {
   userInfo: JSON.parse(window.sessionStorage.getItem('userInfo')) || {},
-  token: window.sessionStorage.getItem('userToken') || ''
+  token: window.sessionStorage.getItem('token') || ''
 }
 
 const getters = {

@@ -1,19 +1,13 @@
-import axios from 'axios'
+import Vue from 'vue'
 
 export default {
   signIn (req, cb, errorCb) {
-    axios.post(`${window.config.API_ORIGIN}/api/session`, req)
+    Vue.axios.post(`${window.config.API_ORIGIN}/api/sessions`, req)
       .then(res => {
         cb(res)
       })
       .catch(err => {
         errorCb(err)
       })
-  },
-  signOut (cb) {
-    setTimeout(() => {
-      // router.push({ name: 'signin' })
-      cb()
-    }, 100)
   }
 }

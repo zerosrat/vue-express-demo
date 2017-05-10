@@ -34,7 +34,7 @@ npm run start
 ```
 
 ## db design
-see [db.md](docs/db.md)
+see [db.md](server/docs/db.md)
 
 ## RESTful api
-see [api.md](docs/api.md)
+see [api.md](server/docs/api.md)

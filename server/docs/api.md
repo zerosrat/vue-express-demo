@@ -6,6 +6,9 @@
 - get /users/:name
 - delete /users/:name
 
+## session
+- POST /sessions
+
 ## todo
 - POST /todos
 - get /todos
