@@ -32,3 +32,9 @@ npm run dev
 cd server
 npm run start
 ```
+
+## db design
+see [db.md](docs/db.md)
+
+## RESTful api
+see [api.md](docs/api.md)
