@@ -1,6 +1,7 @@
 import * as types from '../mutations'
 import sessionAPI from '../../api/session'
 import router from '@/router'
+import Vue from 'vue'
 
 const state = {
   userInfo: JSON.parse(window.sessionStorage.getItem('userInfo')) || {},
@@ -24,7 +25,7 @@ const actions = {
       },
       err => {
         if (err.response.data) {
-          alert(err.response.data.message)
+          Vue.prototype.$message.error({ message: err.response.data.message })
         }
       }
     )

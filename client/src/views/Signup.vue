@@ -27,13 +27,13 @@ export default {
         },
         ({status}) => {
           if (status === 201) {
-            alert('Sign up successfully')
+            this.$message.success('Sign up successfully, please sign in')
             this.$router.push({ name: 'signin' })
           }
         },
         err => {
           if (err.response.data) {
-            alert(err.response.data.message)
+            this.$message.error(err.response.data.message)
           }
         }
       )

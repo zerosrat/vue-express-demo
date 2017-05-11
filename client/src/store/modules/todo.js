@@ -1,5 +1,6 @@
 import todoAPI from '@/api/todo'
 import * as types from '../mutations'
+import Vue from 'vue'
 
 // for testing
 if (navigator.userAgent.indexOf('PhantomJS') > -1) {
@@ -18,12 +19,11 @@ const actions = {
   getAllTodos ({ commit }) {
     todoAPI.getList(
       ({ data }) => {
-        // this.todos = data.data || []
         commit(types.GET_TODOS, { todos: data.data })
       },
       err => {
         if (err.response.data) {
-          alert(err.response.data.message)
+          Vue.prototype.$message.error(err.response.data.message)
         }
       }
     )
@@ -37,7 +37,7 @@ const actions = {
       },
       err => {
         if (err.response.data) {
-          alert(err.response.data.message)
+          Vue.prototype.$message.error(err.response.data.message)
         }
       }
     )
@@ -51,7 +51,7 @@ const actions = {
       },
       err => {
         if (err.response.data) {
-          alert(err.response.data.message)
+          Vue.prototype.$message.error(err.response.data.message)
         }
       }
     )
@@ -65,7 +65,7 @@ const actions = {
       },
       err => {
         if (err.response.data) {
-          alert(err.response.data.message)
+          Vue.prototype.$message.error(err.response.data.message)
         }
       }
     )
@@ -77,13 +77,6 @@ const mutations = {
     state.todos = todos
   },
 
-  // addTodo (state, { text }) {
-  //   state.todos.push({
-  //     text,
-  //     done: false
-  //   })
-  // },
-
   [types.UPDATE_TODOS] (state, { newTodo, todo }) {
     Object.assign(todo, { text: newTodo.text, done: newTodo.done })
   },
@@ -91,6 +84,13 @@ const mutations = {
   [types.DELETE_TODOS] (state, todo) {
     state.todos.splice(state.todos.indexOf(todo), 1)
   }
+
+  // addTodo (state, { text }) {
+  //   state.todos.push({
+  //     text,
+  //     done: false
+  //   })
+  // },
 
   // toggleTodo (state, { todo }) {
   //   todo.done = !todo.done

@@ -8,6 +8,9 @@ import axios from 'axios'
 
 Vue.axios = axios
 
+import { Message } from 'element-ui'
+Vue.prototype.$message = Message
+
 if (process.env.NODE_ENV !== 'production') {
   require('./config/dev.config.js')
 } else if (process.env.NODE_ENV === 'production') {
