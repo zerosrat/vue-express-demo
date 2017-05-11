@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const User = mongoose.model('User');
 
 module.exports = {
   create (req, res, next) {
-    if (!req.body.name || !req.body.password) {
+    const { name, password } = req.body;
+    if (!name || !password) {
       let err = new Error('Incorrect params');
       err.status = 400;
       next(err);
     } else {
-      User.findOne({ name: req.body.name }, (err, user) => {
+      User.findOne({ name }, (err, user) => {
         if (err) {
           next(err);
         } else {
@@ -17,14 +20,24 @@ module.exports = {
             err.status = 409;
             next(err);
           } else {
-            let newUser = new User(req.body);
-            newUser.save((err, nuser) => {
+            bcrypt.hash(password, saltRounds, (err, hash) => {
               if (err) {
-                next(err);
+                next(err)
               } else {
-                res.status(201).json({ data: nuser });
+                const newUser = new User({
+                  name,
+                  password: hash
+                });
+                newUser.save((err, nuser) => {
+                  if (err) {
+                    next(err);
+                  } else {
+                    res.status(201).json({ data: nuser });
+                  }
+                })
               }
-            })
+            });
+
           }
         }
       })

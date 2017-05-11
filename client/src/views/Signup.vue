@@ -28,6 +28,7 @@ export default {
         ({status}) => {
           if (status === 201) {
             alert('Sign up successfully')
+            this.$router.push({ name: 'signin' })
           }
         },
         err => {

@@ -1,5 +1,6 @@
 import * as types from '../mutations'
-import session from '../../api/session'
+import sessionAPI from '../../api/session'
+import router from '@/router'
 
 const state = {
   userInfo: JSON.parse(window.sessionStorage.getItem('userInfo')) || {},
@@ -12,17 +13,27 @@ const getters = {
 }
 
 const actions = {
-  signIn ({ commit }, data) {
-    commit(types.SIGN_IN, data)
-    window.sessionStorage.setItem('userInfo', JSON.stringify(data.user))
-    window.sessionStorage.setItem('token', data.token)
+  signIn ({ commit }, req) {
+    sessionAPI.signIn(
+      req,
+      ({ data }) => {
+        commit(types.SIGN_IN, data.data)
+        window.sessionStorage.setItem('userInfo', JSON.stringify(data.data.user))
+        window.sessionStorage.setItem('token', data.data.token)
+        router.push({ name: 'home' })
+      },
+      err => {
+        if (err.response.data) {
+          alert(err.response.data.message)
+        }
+      }
+    )
   },
 
   signOut ({ commit }) {
-    session.signOut(() => {
-      commit(types.SIGN_OUT)
-      window.sessionStorage.setItem('userInfo', null)
-    })
+    window.sessionStorage.setItem('userInfo', JSON.stringify({}))
+    window.sessionStorage.setItem('token', '')
+    commit(types.SIGN_OUT)
   }
 }
 

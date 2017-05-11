@@ -1,12 +1,12 @@
 # db design
 
 ## user
-- id
+- _id
 - name
 - password
 
 ## todo
-- id
+- _id
 - text
 - done
 - userid

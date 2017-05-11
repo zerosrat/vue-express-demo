@@ -31,5 +31,6 @@ export default {
   border-radius: 1em;
   background-color: #fff;
   color: #42b983;
+  cursor: pointer;
 }
 </style>
