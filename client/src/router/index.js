@@ -29,9 +29,10 @@ const routes = [
     beforeEnter: (to, from, next) => {
       const token = sessionStorage.getItem('token')
       if (token) {
-        Vue.axios.defaults.headers.common['x-access-token'] = token
+        Vue.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
         next()
       } else {
+        Vue.prototype.$message.error({ message: 'Please sign in' })
         next('/')
       }
     }

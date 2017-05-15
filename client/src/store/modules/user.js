@@ -24,8 +24,10 @@ const actions = {
         router.push({ name: 'home' })
       },
       err => {
-        if (err.response.data) {
+        if (err.response && err.response.data) {
           Vue.prototype.$message.error({ message: err.response.data.message })
+        } else {
+          Vue.prototype.$message.error({ message: err.message })
         }
       }
     )

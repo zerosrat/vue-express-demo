@@ -18,7 +18,11 @@ module.exports = {
         } else {
           bcrypt.compare(password, user.password, function(err, confirmed) {
             if (confirmed) {
-              const token = jwt.sign(user, config.secret);
+              const payload = {
+                id: user._id,
+                name: user.name
+              };
+              const token = jwt.sign(payload, config.secret);
               res.status(201).json({
                 message: 'Sign in successfully',
                 data: {
