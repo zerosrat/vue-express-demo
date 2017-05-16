@@ -24,14 +24,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', index);
-app.use('/api', users);
-app.use('/api', session);
-app.use('/api', todo);
+app.use('/', index, methodNotAllowed);
+app.use('/api', users, methodNotAllowed);
+app.use('/api', session, methodNotAllowed);
+app.use('/api', todo, methodNotAllowed);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  let err = new Error('API not Found');
+  const err = new Error('API not Found');
   err.status = 404;
   next(err);
 });
@@ -51,3 +51,10 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// handle not allowed methods
+function methodNotAllowed (req, res, next) {
+  const err = new Error('Method not allowed')
+  err.status = 405;
+  next(err)
+}
